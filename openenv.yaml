@@ -1,0 +1,5 @@
+name: email-triage
+description: A real-world customer support email triage environment with complex conversation threads, priority SLAs, and partial reward grading.
+version: 1.0.0
+author: Bontha Vijay
+entrypoint: src.env:EmailTriageEnv
