@@ -1,5 +1,6 @@
 from .models import EmailAction, EmailReward
 
+
 def grade_step(action: EmailAction, expected_dept: str, expected_action: str, current_total_score: float) -> EmailReward:
     score = 0.0
     details = []
@@ -54,5 +55,7 @@ def grade_step(action: EmailAction, expected_dept: str, expected_action: str, cu
         step_reward=step_reward,
         total_score=new_total,
         details=", ".join(details),
-        feedback_message=" ".join(feedback_parts)
+        feedback_message=" ".join(feedback_parts),
+        done=False,
+        reward=step_reward,
     )
