@@ -48,9 +48,9 @@ The environment provides partial progress signals:
 ## Baseline Scores
 With the dummy fallback agent (always picks `support` / `resolve`):
 ```
-[easy]   score=0.000  (3 steps — misses billing, sales, engineering routing)
-[medium] score=1.000  (3 steps — gets 1/3 correct: support/resolve)
-[hard]   score=0.000  (3 steps — misses billing escalation, engineering escalation, spam)
+[easy]   score=0.010  (3 steps — misses billing, sales, engineering routing)
+[medium] score=0.337  (3 steps — gets 1/3 correct: support/resolve)
+[hard]   score=0.010  (3 steps — misses billing escalation, engineering escalation, spam)
 ```
 
 ## Setup Instructions
