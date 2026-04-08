@@ -48,7 +48,8 @@ def grade_step(action: EmailAction, expected_dept: str, expected_action: str, cu
         details.append(f"+{conf_bonus:.2f} confidence bonus")
         feedback_parts.append(f"Perfect decision with {action.confidence*100:.0f}% confidence!")
 
-    step_reward = max(0.0, min(1.0, score))
+    # Clamp to strict open interval (0, 1) — evaluator rejects exactly 0.0 and 1.0
+    step_reward = max(0.01, min(0.99, score))
     new_total = current_total_score + step_reward
 
     return EmailReward(
