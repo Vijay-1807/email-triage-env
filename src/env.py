@@ -25,6 +25,7 @@ class EmailTriageEnv:
         self.last_decision_feedback = None
         self._step_count = 0
         self._episode_id = f"email-triage-{level}-1"
+        self._total_emails = self.loader.total()
 
     def close(self) -> None:
         """Clean up resources. Required by OpenEnv framework."""
@@ -73,6 +74,14 @@ class EmailTriageEnv:
         return self.step(action, timeout_s=timeout_s, **kwargs)
 
     @property
+    def normalized_score(self) -> float:
+        """Return score normalized to strict (0, 1) range for evaluator compliance."""
+        if self._total_emails == 0 or self._step_count == 0:
+            return 0.01
+        avg = self.total_score / self._total_emails
+        return max(0.01, min(0.99, avg))
+
+    @property
     def state(self) -> EmailState:
         """Get the current environment state."""
         return EmailState(
@@ -82,7 +91,7 @@ class EmailTriageEnv:
             current_idx=self.loader.current_index,
             total_emails=self.loader.total(),
             is_done=(self.current_email is None),
-            score=self.total_score
+            score=self.normalized_score
         )
 
     def _make_obs(self, reward: Optional[float], done: bool) -> EmailObservation:

@@ -10,7 +10,7 @@ try:
         repo_id="Vijay-1807/email-triage-env",
         repo_type="space",
         ignore_patterns=[".git", "__pycache__", ".venv", "venv", "uv.lock", "outputs", "push_to_hf.py"],
-        commit_message="Fix reset_async error and add OpenEnv validation fixes"
+        commit_message="Fix Phase 2 evaluator scores out of range issue"
     )
     print("✅ Successfully pushed to Hugging Face Space!")
 except Exception as e:

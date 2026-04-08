@@ -116,13 +116,15 @@ def main():
                 action_str = f"dept={action.department}|act={action.action}"
 
                 obs = env.step(action)
-                step_reward = obs.reward if obs.reward is not None else 0.0
+                step_reward = obs.reward if obs.reward is not None else 0.01
+                # Clamp individual step reward to strict (0, 1)
+                step_reward = max(0.01, min(0.99, step_reward))
                 done_val = obs.done
 
             except Exception as e:
                 error_val = str(e)
                 action_str = "error"
-                step_reward = 0.0
+                step_reward = 0.01
                 done_val = True
 
             rewards.append(step_reward)
@@ -131,8 +133,10 @@ def main():
             if done_val:
                 break
 
-        success = env.total_score > 0 and len(rewards) > 0
-        log_end(success=success, steps=step_count, score=env.total_score, rewards=rewards)
+        # Compute final normalized score in (0, 1)
+        final_score = env.normalized_score
+        success = final_score > 0.01 and len(rewards) > 0
+        log_end(success=success, steps=step_count, score=final_score, rewards=rewards)
         env.close()
 
 
